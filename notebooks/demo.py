@@ -58,13 +58,13 @@ def _(mo):
 
 
 @app.cell
-def _(mo, url):
+def _(url):
     from transcriber.main import transcribe_url
     if url.value:
         result = transcribe_url(url.value)
-        mo.display(result)
+        print(result)
     else:
-        mo.display("Please enter a URL above.")
+        print("Please enter a URL above.")
     return (result,)
 
 
