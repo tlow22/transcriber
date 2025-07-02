@@ -21,7 +21,7 @@ def _(mo):
         r"""
     # Transcriber: Basic Marimo Demo
 
-    How to use the `transcriber package to download and transcribe audio-to-text. 
+    How to use the `transcriber package to download and transcribe audio-to-text.
     """
     )
     return
@@ -65,19 +65,7 @@ def _(mo, url):
         mo.display(result)
     else:
         mo.display("Please enter a URL above.")
-    return
-
-
-@app.cell
-def _(mo):
-    # Markdown: Output explanation
-    mo.md("""
-    ## Output Explanation
-    - `text`: The full transcription as a string.
-    - `segments`: List of segments with start/end times and text.
-    - `language`: Detected language code.
-    """)
-    return
+    return (result,)
 
 
 @app.cell(hide_code=True)
@@ -104,6 +92,24 @@ def _(mo):
     ```
     """
     )
+    return
+
+
+@app.cell
+def _():
+    from transcriber.main import combine_transcription
+    return (combine_transcription,)
+
+
+@app.cell
+def _(combine_transcription, result):
+    text = combine_transcription(result)
+    return (text,)
+
+
+@app.cell
+def _(text):
+    text
     return
 
 

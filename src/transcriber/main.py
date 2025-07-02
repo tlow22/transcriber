@@ -1,13 +1,12 @@
 import tempfile
 import os
 from typing import Dict, Optional
-from downloader import download_audio_from_url
-from . import get_service
+from .downloader import download_audio_from_url
+from .whisper_service import WhisperTranscriptionService
 
 
 def transcribe_url(
     url: str,
-    service: str = "whisper",
     audio_format: str = None,
     quality: str = None,
     keep_file: bool = False,
@@ -16,10 +15,9 @@ def transcribe_url(
     language: str = None
 ) -> Dict:
     """
-    Download audio from the given URL and transcribe it using the selected service.
+    Download audio from the given URL and transcribe it using Whisper.
     Args:
         url: The URL to download audio from.
-        service: The transcription service to use (default: 'whisper').
         audio_format: Audio format to extract (default: 'mp3' or $AUDIO_FORMAT).
         quality: Download quality (default: 'bestaudio/best' or $AUDIO_QUALITY).
         keep_file: If True, do not delete the file after use.
@@ -51,16 +49,26 @@ def transcribe_url(
             quality=quality,
             keep_file=keep_file
         )
-        service_cls = get_service(service)
-        if service_cls is None:
-            raise ValueError(f"Transcription service '{service}' not found.")
-        if service == "whisper":
-            transcriber = service_cls(model_name=model_name)
-            result = transcriber.transcribe(audio_path, language=language)
-        else:
-            transcriber = service_cls()
-            result = transcriber.transcribe(audio_path)
+        transcriber = WhisperTranscriptionService(model_name=model_name)
+        result = transcriber.transcribe(audio_path, language=language)
         return result
     finally:
         if not keep_file and temp_dir_obj is not None:
-            temp_dir_obj.cleanup() 
+            temp_dir_obj.cleanup()
+
+
+def combine_transcription(transcription: Dict) -> str:
+    """
+    Combine the segments of a transcription result into a single wall of text.
+    If 'text' is present, return it; otherwise, concatenate all segment texts.
+    Args:
+        transcription: The transcription result dict (from transcribe_url).
+    Returns:
+        str: The combined transcription as a single string.
+    """
+    if "text" in transcription and transcription["text"]:
+        return transcription["text"]
+    elif "segments" in transcription:
+        return " ".join(seg["text"] for seg in transcription["segments"] if "text" in seg)
+    else:
+        return "" 
