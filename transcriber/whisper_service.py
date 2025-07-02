@@ -1,4 +1,5 @@
-from . import TranscriptionService, register_service
+from .base import TranscriptionService
+from . import register_service
 from typing import Dict, Any, Optional
 import whisper
 import os
@@ -25,9 +26,9 @@ class WhisperTranscriptionService(TranscriptionService):
             for s in result.get("segments", [])
         ]
         return {
-            "text": result.get("text", ""),
-            "segments": segments,
-            "language": result.get("language", "")
+            "text"     : result.get("text", ""),
+            "segments" : segments,
+            "language" : result.get("language", "")
         }
 
 # Register the service

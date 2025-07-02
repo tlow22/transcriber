@@ -5,11 +5,11 @@ from typing import Optional
 
 
 def download_audio_from_url(
-    url: str,
-    output_dir: Optional[str] = None,
-    audio_format: str = "mp3",
-    quality: str = "bestaudio/best",
-    keep_file: bool = False
+    url          : str,
+    output_dir   : Optional[str] = None,
+    audio_format : str = "mp3",
+    quality      : str = "bestaudio/best",
+    keep_file    : bool = False
 ) -> str:
     """
     Downloads audio from the given URL using yt-dlp in audio-only mode.

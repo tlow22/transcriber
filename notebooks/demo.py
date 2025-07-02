@@ -21,7 +21,7 @@ def _(mo):
         r"""
     # Transcriber: Basic Marimo Demo
 
-    This notebook demonstrates how to use the transcriber package to download and transcribe audio from a URL (e.g., YouTube) using Whisper.
+    How to use the `transcriber package to download and transcribe audio-to-text. 
     """
     )
     return
@@ -39,8 +39,20 @@ def _(mo):
 
 
 @app.cell
+def _():
+    youtube_embed = """<iframe width="642" height="1141" src="https://www.youtube.com/embed/iOZk8j4fp7U" title="The Best Guacamole Recipe" frameborder="3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>"""
+    return (youtube_embed,)
+
+
+@app.cell
+def _(mo, youtube_embed):
+    mo.iframe(youtube_embed, width=800, height=800)
+    return
+
+
+@app.cell
 def _(mo):
-    url = mo.ui.text(label="YouTube or audio URL", value="https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    url = mo.ui.text(label="YouTube or audio URL", value="https://www.youtube.com/shorts/iOZk8j4fp7U")
     url
     return (url,)
 
@@ -68,11 +80,10 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(
         r"""
-    \"""
     ## Advanced Usage: Configuration
     You can customize the transcription process with additional options:
 
@@ -91,7 +102,6 @@ def _(mo):
         language="en"
     )
     ```
-    \""")
     """
     )
     return
