@@ -5,14 +5,34 @@ from .downloader import download_audio_from_url
 from .whisper_service import WhisperTranscriptionService
 
 
+def transcribe_file(
+    file_path   : str,
+    model_name  : str = None,
+    language    : str = None
+) -> Dict:
+    """
+    Transcribe a local audio file using Whisper.
+    Args:
+        file_path: Path to the local audio file.
+        model_name: Whisper model (default: 'base' or $WHISPER_MODEL).
+        language: Language code hint for transcription (default: None or $LANGUAGE_HINT).
+    Returns:
+        dict: Transcription result in the standard JSON schema.
+    """
+    model_name = model_name or os.environ.get("WHISPER_MODEL", "base")
+    language   = language or os.environ.get("LANGUAGE_HINT")
+    transcriber = WhisperTranscriptionService(model_name=model_name)
+    return transcriber.transcribe(file_path, language=language)
+
+
 def transcribe_url(
-    url: str,
-    audio_format: str = None,
-    quality: str = None,
-    keep_file: bool = False,
-    temp_dir: Optional[str] = None,
-    model_name: str = None,
-    language: str = None
+    url          : str,
+    audio_format : str = None,
+    quality      : str = None,
+    keep_file    : bool = False,
+    temp_dir     : Optional[str] = None,
+    model_name   : str = None,
+    language     : str = None
 ) -> Dict:
     """
     Download audio from the given URL and transcribe it using Whisper.
@@ -28,10 +48,10 @@ def transcribe_url(
         dict: Transcription result in the standard JSON schema.
     """
     audio_format = audio_format or os.environ.get("AUDIO_FORMAT", "mp3")
-    quality = quality or os.environ.get("AUDIO_QUALITY", "bestaudio/best")
-    temp_dir = temp_dir or os.environ.get("TEMP_DIR")
-    model_name = model_name or os.environ.get("WHISPER_MODEL", "base")
-    language = language or os.environ.get("LANGUAGE_HINT")
+    quality      = quality or os.environ.get("AUDIO_QUALITY", "bestaudio/best")
+    temp_dir     = temp_dir or os.environ.get("TEMP_DIR")
+    model_name   = model_name or os.environ.get("WHISPER_MODEL", "base")
+    language     = language or os.environ.get("LANGUAGE_HINT")
 
     if temp_dir is None:
         temp_dir_obj = tempfile.TemporaryDirectory()
@@ -44,31 +64,18 @@ def transcribe_url(
     try:
         audio_path = download_audio_from_url(
             url,
-            output_dir=temp_dir_path,
-            audio_format=audio_format,
-            quality=quality,
-            keep_file=keep_file
+            output_dir   = temp_dir_path,
+            audio_format = audio_format,
+            quality      = quality,
+            keep_file    = keep_file
         )
-        transcriber = WhisperTranscriptionService(model_name=model_name)
-        result = transcriber.transcribe(audio_path, language=language)
+        result = transcribe_file(
+            audio_path,
+            model_name=model_name,
+            language=language
+        )
         return result
     finally:
         if not keep_file and temp_dir_obj is not None:
             temp_dir_obj.cleanup()
 
-
-def combine_transcription(transcription: Dict) -> str:
-    """
-    Combine the segments of a transcription result into a single wall of text.
-    If 'text' is present, return it; otherwise, concatenate all segment texts.
-    Args:
-        transcription: The transcription result dict (from transcribe_url).
-    Returns:
-        str: The combined transcription as a single string.
-    """
-    if "text" in transcription and transcription["text"]:
-        return transcription["text"]
-    elif "segments" in transcription:
-        return " ".join(seg["text"] for seg in transcription["segments"] if "text" in seg)
-    else:
-        return "" 

@@ -51,8 +51,8 @@ def _(mo, youtube_embed):
 
 
 @app.cell
-def _(mo):
-    url = mo.ui.text(label="YouTube or audio URL", value="https://www.youtube.com/shorts/iOZk8j4fp7U")
+def _():
+    url = "https://www.youtube.com/shorts/iOZk8j4fp7U"
     url
     return (url,)
 
@@ -60,12 +60,23 @@ def _(mo):
 @app.cell
 def _(url):
     from transcriber.main import transcribe_url
-    if url.value:
-        result = transcribe_url(url.value)
+    if url:
+        result = transcribe_url(url)
         print(result)
     else:
         print("Please enter a URL above.")
     return (result,)
+
+
+@app.cell
+def _(result):
+    result['text']
+    return
+
+
+@app.cell
+def _():
+    return
 
 
 @app.cell(hide_code=True)
@@ -92,24 +103,6 @@ def _(mo):
     ```
     """
     )
-    return
-
-
-@app.cell
-def _():
-    from transcriber.main import combine_transcription
-    return (combine_transcription,)
-
-
-@app.cell
-def _(combine_transcription, result):
-    text = combine_transcription(result)
-    return (text,)
-
-
-@app.cell
-def _(text):
-    text
     return
 
 
