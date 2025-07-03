@@ -50,7 +50,7 @@ print(result['text'])
 ```
 
 - `transcribe_url(url)` downloads and transcribes the audio from the URL.
-- `combine_transcription(result)` returns the full transcription as a single string.
+- `transcribe_file(filename)` transcribes an audiofile. 
 
 ## Notes
 - This package uses local Whisper (no API key required).
