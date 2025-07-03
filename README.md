@@ -46,8 +46,7 @@ from transcriber.main import transcribe_url, combine_transcription
 
 url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 result = transcribe_url(url)
-wall_of_text = combine_transcription(result)
-print(wall_of_text)
+print(result['text'])
 ```
 
 - `transcribe_url(url)` downloads and transcribes the audio from the URL.
