@@ -19,7 +19,7 @@ def _():
 def _(mo):
     mo.md(
         r"""
-    # Transcriber: Basic Marimo Demo
+    # Transcriber: Basic Demo
 
     How to use the `transcriber package to download and transcribe audio-to-text.
     """
@@ -141,14 +141,6 @@ def _(mo):
     """
     )
     return
-
-
-app._unparsable_cell(
-    r"""
-    mo.iframe(html=\"<blockquote class=\"tiktok-embed\" cite=\"https://www.tiktok.com/@themodernproper/video/7218935713335610667\" data-video-id=\"7218935713335610667\" style=\"max-width: 605px;min-width: 325px;\" > <section> <a target=\"_blank\" title=\"@themodernproper\" href=\"https://www.tiktok.com/@themodernproper?refer=embed\">@themodernproper</a> We’ve been making some version of this 15 minute ramen for years, but we’ve only just figured out how to make it creamy, lucky you. But before we get to that, we’re starting with @bonafideprovisions  certified organic chicken broth because for us quality is key and this is about as close to homemade as you can get. No fillers or weird after taste, saving you all the time, but not sacrificing any of the flavor. You know we love a good shortcut, so you’re welcome in advance. Find Bonafide Provisions cooking broths at a local grocery store near you. 1 quart Bonafide Provisions Chicken Broth 3 ounces shiitake mushrooms, sliced   2 cups bok choy roughly chopped 1 tablespoon tamari  1 tablespoon fish sauce  2 garlic cloves grated  1 teaspoon grated ginger  3 eggs  1 tablespoon Japanese mayonnaise 1 teaspoon sambal oelek green onions for serving  Sesame seeds for serving  Chili crisp for serving  In a medium saucepan add Bonafide Provisions Chicken Broth, mushrooms, bok choy, tamari, fish sauce, garlic and ginger. Bring to a boil over medium high heat and add two of the eggs. Cover and cook for 7 minutes.  Meanwhile, in a small bowl, whisk remaining egg along with mayonnaise and sambal oelek until smooth.  Remove the eggs from the ramen and transfer to an ice bath. Remove 1 cup of chicken broth and set aside. Add noodles and cook for 4 minutes.  Slowly pour broth into egg mixture, whisking vigorously.  Slowly stir egg mixture into ramen until fully combined. Divide ramen into two bowls and top with eggs, green onions, sesame seeds and chili crisp.   <a title=\"ramen\" target=\"_blank\" href=\"https://www.tiktok.com/tag/ramen?refer=embed\">#ramen</a> <a title=\"easyrecipe\" target=\"_blank\" href=\"https://www.tiktok.com/tag/easyrecipe?refer=embed\">#easyrecipe</a> <a title=\"ramenrecipe\" target=\"_blank\" href=\"https://www.tiktok.com/tag/ramenrecipe?refer=embed\">#ramenrecipe</a> <a title=\"soup\" target=\"_blank\" href=\"https://www.tiktok.com/tag/soup?refer=embed\">#soup</a> <a target=\"_blank\" title=\"♬ original sound - TheModernProperWeeknightDinner\" href=\"https://www.tiktok.com/music/original-sound-7218935742775446314?refer=embed\">♬ original sound - TheModernProperWeeknightDinner</a> </section> </blockquote> <script async src=\"https://www.tiktok.com/embed.js\"></script>\")
-    """,
-    name="_"
-)
 
 
 if __name__ == "__main__":
