@@ -40,7 +40,7 @@ def _(mo):
 
 @app.cell
 def _():
-    from transcriber.main import transcribe_url
+    from video2text.main import transcribe_url
 
     url    = "https://www.youtube.com/shorts/iOZk8j4fp7U"
     result = transcribe_url(url)
